@@ -56,7 +56,6 @@ class BootViewModel @Inject constructor(
         viewModelScope.launch {
             val bootConfig = async { bootUseCase.getBootSettings() }.await()
             Timber.d("BootViewModel init() bootConfig:$bootConfig")
-            _bootConfig.emit(bootConfig)
             if (bootConfig is UiState.Success) {
                 val configDeferred =
                     async { saveBootConfigurations(bootConfig.data.data?.settings) }
@@ -67,6 +66,7 @@ class BootViewModel @Inject constructor(
                 Timber.d("BootViewModel save Complete serverList")
                 _navigationEvent.emit(NavigationEvent.NavigateToHome)
             }
+            _bootConfig.emit(bootConfig)
         }
     }
 
