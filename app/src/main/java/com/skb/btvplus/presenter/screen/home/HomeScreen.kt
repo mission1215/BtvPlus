@@ -39,7 +39,11 @@ private const val TAG = "HomeScreen"
  * @param navController
  */
 @Composable
-fun HomeScreen(sharedViewModel: SharedViewModel, navController: NavHostController) {
+fun HomeScreen(
+    sharedViewModel: SharedViewModel,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navController: NavHostController,
+) {
     Timber.d("$TAG:: init")
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -85,5 +89,8 @@ fun HomeScreen(sharedViewModel: SharedViewModel, navController: NavHostControlle
 @Composable
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
-    HomeScreen(hiltViewModel<SharedViewModel>(), NavHostController(LocalContext.current))
+    HomeScreen(
+        sharedViewModel = hiltViewModel<SharedViewModel>(),
+        navController = NavHostController(LocalContext.current)
+    )
 }

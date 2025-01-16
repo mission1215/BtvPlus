@@ -46,7 +46,17 @@ fun NavigationHost(
             animationSpec = tween(durationMillis = 300)
         )
     }) {
-        composable(Screens.Home.route) { HomeScreen(sharedViewModel, navController) }
-        composable(Screens.Detail.route) { DetailScreen(sharedViewModel, navController) }
+        composable(Screens.Home.route) {
+            HomeScreen(
+                sharedViewModel = sharedViewModel,
+                navController = navController
+            )
+        }
+        composable(Screens.Detail.route) {
+            DetailScreen(
+                sharedViewModel = sharedViewModel,
+                navController = navController
+            )
+        }
     }
 }

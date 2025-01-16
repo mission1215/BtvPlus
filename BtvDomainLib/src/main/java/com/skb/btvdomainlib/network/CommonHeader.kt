@@ -1,7 +1,9 @@
 package com.skb.btvdomainlib.network
 
+import com.skb.btvdomainlib.utils.Util
+import persistence.Constants
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 /**
  * Common header
@@ -39,16 +41,43 @@ class CommonHeader : BaseMap {
         const val myTvAuthKey = "mytv_auth_key"
     }
 
-    constructor(stg: Boolean) {
-        val key = if (stg) CARBON_API_KEY_STG else CARBON_API_KEY_PRD
-        val format = SimpleDateFormat("yyyyMMddHHmmss.SSS")
-        val date = Date()
-        add("accept", "application/json;charset=utf-8")
-        add(contentsType, "application/json;charset=utf-8")
-        add(accept, "application/json;charset=utf-8")
-        add(timestamp, format.format(date))
-        add(apiKey, key)
-        add(trace, "Adot")
-        add(connection, "close")
+    sealed class HeaderType {
+        object Base : HeaderType()
+        object Carbon : HeaderType()
+    }
+
+    constructor(headerType: HeaderType) {
+        when (headerType) {
+            HeaderType.Base -> {
+                val format = SimpleDateFormat("yyyyMMddHHmmss.SSS")
+                val date = Date()
+                add(contentsType, "application/json;charset=utf-8")
+                add(accept, "application/json;charset=utf-8")
+                add(clientId, Constants.APOLLO_ID_STG)
+                add(clientIP, Util.getClientIp())
+                add(timestamp, format.format(date))
+                add(authVal, Constants.APOLLO_TOKEN_STG)
+                add(connection, "close")
+                add(apiKey, API_KEY)
+                add(trace, TRACE)
+            }
+
+            HeaderType.Carbon -> {
+                // TODO:  stg 체크
+                val key = if (true) CARBON_API_KEY_STG else Companion.CARBON_API_KEY_PRD
+                val format = SimpleDateFormat("yyyyMMddHHmmss.SSS")
+                val date = Date()
+                add("accept", "application/json;charset=utf-8")
+                add(contentsType, "application/json;charset=utf-8")
+                add(accept, "application/json;charset=utf-8")
+                add(clientId, Constants.APOLLO_ID_STG)
+                add(timestamp, format.format(date))
+                add(authVal, Constants.APOLLO_TOKEN_STG)
+                add(apiKey, key)
+                add(clientIP, Util.getClientIp())
+                add(trace, "Adot")
+                add(connection, "close")
+            }
+        }
     }
 }

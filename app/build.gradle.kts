@@ -21,6 +21,10 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        // BuildConfig로 라이브러리에 전달
+        buildConfigField("int", "APP_VERSION_CODE", versionCode.toString())
+        buildConfigField("String", "APP_VERSION_NAME", "\"$versionName\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -7,7 +7,9 @@ import com.skb.btvdomainlib.di.IoDispatcher
 import com.skb.btvdomainlib.di.MainDispatcher
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvdomainlib.usecsae.BootUseCase
+import com.skb.mytvlibrary.server.service.heb.BootConfigurations
 import com.skb.mytvlibrary.server.service.heb.RespBootSettingInfo
+import com.skb.mytvlibrary.utils.BootUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -38,6 +40,7 @@ sealed class NavigationEvent {
 @HiltViewModel
 class BootViewModel @Inject constructor(
     private val bootUseCase: BootUseCase,
+    private val bootUtil: BootUtil,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher, // CPU 집중 작업
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,           // IO 작업 (네트워크/파일)
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,        // UI 작업
@@ -52,10 +55,34 @@ class BootViewModel @Inject constructor(
         Timber.d("BootViewModel init()")
         viewModelScope.launch {
             val bootConfig = async { bootUseCase.getBootSettings() }.await()
+            Timber.d("BootViewModel init() bootConfig:$bootConfig")
             _bootConfig.emit(bootConfig)
             if (bootConfig is UiState.Success) {
+                val configDeferred =
+                    async { saveBootConfigurations(bootConfig.data.data?.settings) }
+                val serverDeferred =
+                    async { saveServerList(bootConfig.data.data?.serverInfo ?: emptyList()) }
+                configDeferred.await()
+                serverDeferred.await()
+                Timber.d("BootViewModel save Complete serverList")
                 _navigationEvent.emit(NavigationEvent.NavigateToHome)
             }
         }
+    }
+
+    fun saveBootConfigurations(configs: BootConfigurations?) {
+        bootUtil.saveBootConfigurations(configs)
+    }
+
+    fun saveServerList(serverList: List<RespBootSettingInfo.ServerInfo>) {
+        bootUtil.saveServerList(serverList)
+    }
+
+    fun loadBootConfigurations(): BootConfigurations? {
+        return bootUtil.loadBootConfigurations()
+    }
+
+    fun loadServerList(): List<RespBootSettingInfo.ServerInfo>? {
+        return bootUtil.loadServerList()
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.skb.btvplus.navigator.SharedViewModel
 
@@ -29,7 +30,11 @@ import com.skb.btvplus.navigator.SharedViewModel
  * @param detailViewModel
  */
 @Composable
-fun DetailScreen(sharedViewModel: SharedViewModel, navController: NavHostController) {
+fun DetailScreen(
+    sharedViewModel: SharedViewModel,
+    detailViewModel: DetailViewModel = hiltViewModel(),
+    navController: NavHostController,
+) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
