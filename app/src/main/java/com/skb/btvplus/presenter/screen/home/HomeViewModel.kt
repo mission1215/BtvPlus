@@ -8,6 +8,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
+/**
+ * Home view model
+ *
+ * @property defaultDispatcher
+ * @property ioDispatcher
+ * @property mainDispatcher
+ * @constructor Create empty Home view model
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher, // CPU 집중 작업
