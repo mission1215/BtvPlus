@@ -16,6 +16,15 @@ data class TabItem(
     val imgRes: Int? = null,
 )
 
+/**
+ * General tab
+ *
+ * @param tabs
+ * @param selectedTabIndex
+ * @param modifier
+ * @param onTabSelected
+ * @receiver
+ */
 @Composable
 fun GeneralTab(
     tabs: List<TabItem>,

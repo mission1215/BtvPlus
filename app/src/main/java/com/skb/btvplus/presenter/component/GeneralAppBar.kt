@@ -13,6 +13,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.skb.btvplus.R
 
+/**
+ * General app bar
+ *
+ * @param modifier
+ * @param title
+ * @param onBackClick
+ * @param actions
+ * @receiver
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun GeneralAppBar(

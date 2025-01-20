@@ -1,6 +1,5 @@
 package com.skb.btvplus.presenter.component
 
-import android.R.attr.top
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +19,15 @@ data class GeneralComponentCardItem(
     var title: String? = null,
 )
 
+
+/**
+ * General component card
+ *
+ * @param modifier
+ * @param item
+ * @param onClick
+ * @receiver
+ */
 @Composable
 fun GeneralComponentCard(
     modifier: Modifier,
