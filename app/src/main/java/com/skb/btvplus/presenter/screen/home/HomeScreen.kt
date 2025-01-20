@@ -54,7 +54,7 @@ fun HomeScreen(
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
-    EventListener(homeViewModel, navController)
+    HandleNavigationEvents(homeViewModel, navController)
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -179,7 +179,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun EventListener(homeViewModel: HomeViewModel, navController: NavHostController) {
+fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostController) {
     val navigationEvent = homeViewModel.navigationEvent.collectAsState(null).value
     Timber.d("EventListener $navigationEvent")
     when (navigationEvent) {
