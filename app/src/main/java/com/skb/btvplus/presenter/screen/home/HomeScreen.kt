@@ -88,7 +88,8 @@ fun HomeScreen(
                 // LayoutContainer 추가
                 LayoutContainer(
                     modifier = Modifier
-                        .fillMaxSize() // 남은 공간을 모두 차지하도록 설정
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
                         .weight(1f), // Column 내에서 균형 있게 공간 배분
                     homeViewModel = homeViewModel
                 )
@@ -149,7 +150,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
         is UiState.Success -> {
             val list = response.data.data?.items
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(list?.size ?: 0) { index ->
