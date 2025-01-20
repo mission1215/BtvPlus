@@ -2,6 +2,8 @@ package com.skb.btvplus.presenter.screen.home
 
 import android.app.Activity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -140,10 +143,13 @@ fun LayoutTab(modifier: Modifier, homeViewModel: HomeViewModel) {
 fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
     val selectedTabIndex = homeViewModel.selectedTabIndexState.collectAsStateWithLifecycle().value
     val response = homeViewModel.contents.collectAsStateWithLifecycle().value
+    val scrollState = rememberLazyListState()
+
     LaunchedEffect(selectedTabIndex) {
         Timber.tag(TAG).d("LaunchedEffect selectedTabIndex :: $selectedTabIndex")
         updateContent(selectedTabIndex, homeViewModel)
     }
+
     when (response) {
         is UiState.Error -> {}
         is UiState.Loading -> {}
@@ -151,6 +157,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
             val list = response.data.data?.items
             LazyColumn(
                 modifier = modifier,
+                state = scrollState,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(list?.size ?: 0) { index ->
