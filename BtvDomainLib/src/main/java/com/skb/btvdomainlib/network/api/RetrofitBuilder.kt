@@ -48,12 +48,12 @@ object RetrofitBuilder {
         trustedHosts: List<String?>? = null,
         readTimeout: Long,
     ): Retrofit {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level =
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-        }
+//        val loggingInterceptor = HttpLoggingInterceptor().apply {
+//            level =
+//                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+//        }
         val httpClientBuilder = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(ApiLoggingInterceptor())
             .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
             .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
             .retryOnConnectionFailure(false)
