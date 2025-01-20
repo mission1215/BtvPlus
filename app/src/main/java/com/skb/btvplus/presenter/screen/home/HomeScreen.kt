@@ -150,7 +150,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
             val list = response.data.data?.items
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(list?.size ?: 0) { index ->
                     Timber.tag(TAG).d("LazyColumn items :: $index")
