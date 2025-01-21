@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.navigator.LandingViewModel
 import com.skb.btvplus.presenter.screen.detail.DetailScreen
 import com.skb.btvplus.presenter.screen.home.HomeScreen
@@ -15,7 +16,9 @@ fun NavigationHost(
     navController: NavHostController,
     startDestination: Screens,
     landingViewModel: LandingViewModel,
+    landingItem: LandingItem? = null
 ) {
+    landingViewModel.landingItem = landingItem
     NavHost(navController, startDestination = startDestination.route) {
         composable(Screens.Home.route) {
             HomeScreen(
