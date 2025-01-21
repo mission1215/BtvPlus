@@ -16,6 +16,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,14 +30,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvplus.navigator.LandingViewModel
-import com.skb.btvplus.navigator.LandingViewModel.DetailLandingItem
-import com.skb.btvplus.navigator.LandingViewModel.HomeLandingItem
 import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import com.skb.btvplus.presenter.component.GeneralTab
 import com.skb.btvplus.presenter.component.ObserveLifeCycleEvents
 import com.skb.btvplus.presenter.component.TabItem
+import com.skb.btvplus.presenter.screen.detail.DetailLandingItem
 import com.skb.mytvlibrary.navigator.Screens
 import com.skb.mytvlibrary.navigator.navigationHostView
 import timber.log.Timber
@@ -57,7 +57,12 @@ fun HomeScreen(
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
-    val landingItem = landingViewModel.landingItem as LandingViewModel.HomeLandingItem
+    val landingItem = landingViewModel.landingItemState.collectAsState(null)
+    Timber.d("landingItem: $landingItem")
+    LaunchedEffect(key1 = landingItem) {
+
+    }
+
     HandleNavigationEvents(homeViewModel, navController)
     ObserveLifeCycleEvents(
         callbackEvent = {
@@ -135,7 +140,7 @@ fun TopBar(homeVewModel: HomeViewModel, navController: NavHostController) {
 
 @Composable
 fun LayoutTab(modifier: Modifier, homeViewModel: HomeViewModel) {
-    val tabs = homeViewModel.tabs.collectAsStateWithLifecycle().value
+    val tabs = homeViewModel.tabState.collectAsStateWithLifecycle().value
     val rememberCoroutineScope = rememberCoroutineScope()
     LaunchedEffect(tabs) {
         Timber.d("LaunchedEffect tabs :: $tabs")
@@ -150,7 +155,7 @@ fun LayoutTab(modifier: Modifier, homeViewModel: HomeViewModel) {
                 val tabs = listOf(TabItem(it.get(0).id, "홈"), TabItem(it.get(0).id, "서브"))
                 GeneralTab(tabs = tabs, selectedTabIndex = 0, modifier) {
                     Timber.d("GeneralTab selectedTabIndex :: $it")
-                    homeViewModel.setSelectedTabIndex(it)
+                    homeViewModel.updateSelectedTabIndex(it)
                 }
                 Timber.d("rememberCoroutineScope launch : tab 0 position set")
             }
@@ -161,7 +166,7 @@ fun LayoutTab(modifier: Modifier, homeViewModel: HomeViewModel) {
 @Composable
 fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
     val selectedTabIndex = homeViewModel.selectedTabIndexState.collectAsStateWithLifecycle().value
-    val response = homeViewModel.contents.collectAsStateWithLifecycle().value
+    val response = homeViewModel.contentsState.collectAsStateWithLifecycle().value
     val scrollState = rememberLazyListState()
 
     LaunchedEffect(selectedTabIndex) {
@@ -210,7 +215,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
 
 @Composable
 fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostController) {
-    val navigationEvent = homeViewModel.navigationEvent.collectAsStateWithLifecycle(null).value
+    val navigationEvent = homeViewModel.navigationEventState.collectAsStateWithLifecycle(null).value
     Timber.d("EventListener $navigationEvent")
     when (navigationEvent) {
         is NavigationEvent.NavigateToDetail -> {
@@ -218,7 +223,7 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
                 navController,
                 landingViewModel = hiltViewModel(),
                 Screens.Detail.route,
-                HomeLandingItem(),
+                DetailLandingItem(id = "detail test"),
             )
         }
 

@@ -25,6 +25,22 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
+ * Navigation event
+ *
+ * @constructor Create empty Navigation event
+ */
+sealed class NavigationEvent {
+    class NavigateToDetail(ladingItem: LandingItem) : NavigationEvent()
+}
+
+/**
+ * Detail landing item
+ *
+ * @constructor Create empty Detail landing item
+ */
+data class HomeLandingItem(val id : String? = null) : LandingItem {}
+
+/**
  * Home view model
  *
  * @property defaultDispatcher
@@ -32,10 +48,6 @@ import javax.inject.Inject
  * @property mainDispatcher
  * @constructor Create empty Home view model
  */
-sealed class NavigationEvent {
-    class NavigateToDetail(ladingItem: LandingItem) : NavigationEvent()
-}
-
 @SuppressLint("AutoboxingStateCreation")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -44,24 +56,43 @@ class HomeViewModel @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,        // UI 작업
     private val homeApiRepository: HomeApiRepository,
 ) : ViewModel() {
-    private val _navigationEvent = MutableSharedFlow<NavigationEvent>()
-    val navigationEvent: SharedFlow<NavigationEvent> = _navigationEvent.asSharedFlow()
+    private val navigationEvent = MutableSharedFlow<NavigationEvent>()
+    val navigationEventState: SharedFlow<NavigationEvent> get() = navigationEvent.asSharedFlow()
+    fun updateNavigationEvent(event: NavigationEvent) = run {
+        viewModelScope.launch {
+            navigationEvent.emit(event)
+        }
+    }
 
     private val _tabs = MutableStateFlow<UiState<ResponseListShelfInfoResDto>>(UiState.Loading)
-    val tabs: StateFlow<UiState<ResponseListShelfInfoResDto>> = _tabs.asStateFlow()
+    val tabState: StateFlow<UiState<ResponseListShelfInfoResDto>> get() = _tabs.asStateFlow()
+    fun updateTabs(tabs: UiState<ResponseListShelfInfoResDto>) = run {
+        viewModelScope.launch {
+            _tabs.emit(tabs)
+        }
+    }
 
-    private val _selectedTabIndex = MutableStateFlow<Int>(0)
-    val selectedTabIndexState: StateFlow<Int> = _selectedTabIndex.asStateFlow()
-    fun setSelectedTabIndex(index: Int) = run { _selectedTabIndex.value = index }
+    private val selectedTabIndex = MutableStateFlow<Int>(0)
+    val selectedTabIndexState: StateFlow<Int> get() = selectedTabIndex.asStateFlow()
+    fun updateSelectedTabIndex(index: Int) = run {
+        viewModelScope.launch {
+            selectedTabIndex.emit(index)
+        }
+    }
 
-    private val _contents = MutableStateFlow<UiState<ResponseListShelfResDto>>(UiState.Loading)
-    val contents: StateFlow<UiState<ResponseListShelfResDto>> = _contents.asStateFlow()
+    private val contents = MutableStateFlow<UiState<ResponseListShelfResDto>>(UiState.Loading)
+    val contentsState: StateFlow<UiState<ResponseListShelfResDto>> get() = contents.asStateFlow()
+    fun updateContents(content: UiState<ResponseListShelfResDto>) = run {
+        viewModelScope.launch {
+            contents.emit(content)
+        }
+    }
 
     init {
         Timber.d("requestGetShelfInfo")
         viewModelScope.launch {
-            val a = async { homeApiRepository.requestGetShelfInfo() }
-            _tabs.emit(a.await())
+            val response = async { homeApiRepository.requestGetShelfInfo() }.await()
+            updateTabs(response)
             requestGetExternalShelf(0)
         }
     }
@@ -85,14 +116,14 @@ class HomeViewModel @Inject constructor(
 
                 UiState.Loading -> {}
             }
-            _contents.emit(response)
+            updateContents(response)
         }
     }
 
     fun sendEvent(navigationEvent: NavigationEvent) {
         viewModelScope.launch {
             Timber.d("sendEvent $navigationEvent")
-            _navigationEvent.emit(navigationEvent)
+            updateNavigationEvent(navigationEvent)
         }
 
     }

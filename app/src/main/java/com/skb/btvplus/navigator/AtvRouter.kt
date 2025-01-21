@@ -19,7 +19,7 @@ fun navigationHostView(
     landingItem: LandingItem,
 ) {
     if (landingItem != null) {
-        landingViewModel.landingItem = landingItem
+        landingViewModel.apply { updateLandingItem(landingItem) }
     }
 
     when (router) {

@@ -12,7 +12,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvplus.navigator.LandingViewModel
-import com.skb.btvplus.navigator.LandingViewModel.HomeLandingItem
 import com.skb.btvplus.ui.theme.BtvPlusTheme
 import com.skb.mytvlibrary.navigator.NavigationHost
 import com.skb.mytvlibrary.navigator.Screens
@@ -44,7 +43,8 @@ class MainActivity : ComponentActivity() {
                     is UiState.Success -> {
                         Timber.d("UiState.Success, ${bootConfig.data}")
                         NavigationHost(
-                            rememberNavController, Screens.Home, landingViewModel, HomeLandingItem()
+                            navController = rememberNavController,
+                            startDestination = Screens.Home,
                         )
                     }
 
