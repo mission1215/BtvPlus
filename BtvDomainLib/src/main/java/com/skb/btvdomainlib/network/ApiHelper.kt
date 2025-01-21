@@ -7,12 +7,26 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 
+/**
+ * Ui state
+ *
+ * @param T
+ * @constructor Create empty Ui state
+ */
 sealed class UiState<out T> {
     object Loading : UiState<Nothing>() // 로딩 상태
     data class Success<out T>(val data: T) : UiState<T>() // 성공 상태
     data class Error(val message: String) : UiState<Nothing>() // 에러 상태
 }
 
+/**
+ * Execute api call sync
+ *
+ * @param T
+ * @param apiCall
+ * @receiver
+ * @return
+ */
 suspend fun <T> executeApiCallSync(apiCall: suspend () -> Response<T>): UiState<T> {
     return try {
         val response = apiCall() // API 호출
@@ -22,6 +36,14 @@ suspend fun <T> executeApiCallSync(apiCall: suspend () -> Response<T>): UiState<
     }
 }
 
+/**
+ * Execute api call flow
+ *
+ * @param T
+ * @param apiCall
+ * @receiver
+ * @return
+ */
 fun <T> executeApiCallFlow(apiCall: suspend () -> Response<T>): Flow<UiState<T>> {
     return flow {
         emit(UiState.Loading) // 로딩 상태 발행
@@ -32,6 +54,12 @@ fun <T> executeApiCallFlow(apiCall: suspend () -> Response<T>): Flow<UiState<T>>
     }.flowOn(Dispatchers.IO)
 }
 
+/**
+ * Handle response
+ *
+ * @param T
+ * @return
+ */
 inline fun <T> Response<T>.handleResponse(): UiState<T> {
     return if (this.isSuccessful) {
         this.body()?.let { body ->

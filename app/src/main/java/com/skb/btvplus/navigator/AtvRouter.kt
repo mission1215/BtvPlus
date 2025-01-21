@@ -2,24 +2,24 @@ package com.skb.mytvlibrary.navigator
 
 import androidx.navigation.NavHostController
 import com.skb.btvplus.navigator.LandingItem
-import com.skb.btvplus.navigator.SharedViewModel
+import com.skb.btvplus.navigator.LandingViewModel
 
 /**
  * Navigation host view >  엡 내부에서 Navigation시 사용
  *
  * @param navController
- * @param sharedViewModel
+ * @param landingViewModel
  * @param router
  * @param landingItem
  */
 fun navigationHostView(
     navController: NavHostController,
-    sharedViewModel: SharedViewModel,
+    landingViewModel: LandingViewModel,
     router: String,
     landingItem: LandingItem,
 ) {
     if (landingItem != null) {
-        sharedViewModel.landingItem = landingItem
+        landingViewModel.landingItem = landingItem
     }
 
     when (router) {

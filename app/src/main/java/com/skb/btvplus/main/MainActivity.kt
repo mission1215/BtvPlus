@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvplus.navigator.LandingItem
-import com.skb.btvplus.navigator.SharedViewModel
+import com.skb.btvplus.navigator.LandingViewModel
 import com.skb.btvplus.ui.theme.BtvPlusTheme
 import com.skb.mytvlibrary.navigator.NavigationHost
 import com.skb.mytvlibrary.navigator.Screens
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 val bootViewModel = hiltViewModel<BootViewModel>()
                 val bootConfig = bootViewModel.bootConfig.collectAsStateWithLifecycle().value
                 val rememberNavController = rememberNavController()
-                val landingViewModel = hiltViewModel<SharedViewModel>()
+                val landingViewModel = hiltViewModel<LandingViewModel>()
                 landingViewModel.landingItem = LandingItem()
 
                 LaunchedEffect(key1 = bootViewModel) {

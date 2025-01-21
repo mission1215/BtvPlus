@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.skb.btvplus.navigator.SharedViewModel
+import com.skb.btvplus.navigator.LandingViewModel
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import timber.log.Timber
@@ -35,7 +35,7 @@ data class DetailLandingItem(val id: String? = null)
  */
 @Composable
 fun DetailScreen(
-    landingViewModel: SharedViewModel,
+    landingViewModel: LandingViewModel,
     detailViewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {

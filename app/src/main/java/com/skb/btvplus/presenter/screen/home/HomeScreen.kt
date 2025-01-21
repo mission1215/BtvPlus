@@ -29,7 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvplus.navigator.LandingItem
-import com.skb.btvplus.navigator.SharedViewModel
+import com.skb.btvplus.navigator.LandingViewModel
 import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
@@ -51,7 +51,7 @@ private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
-    landingViewModel: SharedViewModel,
+    landingViewModel: LandingViewModel,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
@@ -210,7 +210,7 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
         is NavigationEvent.NavigateToDetail -> {
             navigationHostView(
                 navController,
-                sharedViewModel = hiltViewModel(),
+                landingViewModel = hiltViewModel(),
                 Screens.Detail.route,
                 LandingItem(),
             )
@@ -230,7 +230,7 @@ fun updateContent(selectedTabIndex: Int, homeViewModel: HomeViewModel) {
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
     HomeScreen(
-        landingViewModel = hiltViewModel<SharedViewModel>(),
+        landingViewModel = hiltViewModel<LandingViewModel>(),
         navController = NavHostController(LocalContext.current)
     )
 }
