@@ -27,6 +27,7 @@ import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import timber.log.Timber
 
+data class DetailLandingItem(val id: String? = null)
 /**
  * Detail screen
  *
@@ -34,7 +35,7 @@ import timber.log.Timber
  */
 @Composable
 fun DetailScreen(
-    sharedViewModel: SharedViewModel,
+    landingViewModel: SharedViewModel,
     detailViewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {

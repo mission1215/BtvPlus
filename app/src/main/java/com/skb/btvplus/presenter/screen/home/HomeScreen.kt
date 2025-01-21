@@ -16,7 +16,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
@@ -34,6 +34,7 @@ import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import com.skb.btvplus.presenter.component.GeneralTab
+import com.skb.btvplus.presenter.component.ObserveLifeCycleEvents
 import com.skb.btvplus.presenter.component.TabItem
 import com.skb.mytvlibrary.navigator.Screens
 import com.skb.mytvlibrary.navigator.navigationHostView
@@ -44,18 +45,36 @@ private const val TAG = "HomeScreen"
 /**
  * Home screen
  *
- * @param sharedViewModel
+ * @param landingViewModel
  * @param navController
  */
 
 @Composable
 fun HomeScreen(
-    sharedViewModel: SharedViewModel,
+    landingViewModel: SharedViewModel,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
     HandleNavigationEvents(homeViewModel, navController)
+    ObserveLifeCycleEvents(
+        callbackEvent = {
+            Timber.d("ObserveLifeCycleEvents $it")
+            when (it) {
+                Lifecycle.Event.ON_CREATE -> {}
+                Lifecycle.Event.ON_START -> {}
+                Lifecycle.Event.ON_RESUME -> {}
+                Lifecycle.Event.ON_PAUSE -> {}
+                Lifecycle.Event.ON_STOP -> {}
+                Lifecycle.Event.ON_DESTROY -> {}
+                Lifecycle.Event.ON_ANY -> {}
+            }
+        },
+        onDisPoseCallback = {
+
+        },
+    )
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -185,7 +204,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
 
 @Composable
 fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostController) {
-    val navigationEvent = homeViewModel.navigationEvent.collectAsState(null).value
+    val navigationEvent = homeViewModel.navigationEvent.collectAsStateWithLifecycle(null).value
     Timber.d("EventListener $navigationEvent")
     when (navigationEvent) {
         is NavigationEvent.NavigateToDetail -> {
@@ -193,7 +212,7 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
                 navController,
                 sharedViewModel = hiltViewModel(),
                 Screens.Detail.route,
-                landingItem = LandingItem(),
+                LandingItem(),
             )
         }
 
@@ -211,7 +230,7 @@ fun updateContent(selectedTabIndex: Int, homeViewModel: HomeViewModel) {
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
     HomeScreen(
-        sharedViewModel = hiltViewModel<SharedViewModel>(),
+        landingViewModel = hiltViewModel<SharedViewModel>(),
         navController = NavHostController(LocalContext.current)
     )
 }

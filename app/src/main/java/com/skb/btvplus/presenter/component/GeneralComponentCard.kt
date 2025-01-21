@@ -37,7 +37,7 @@ fun GeneralComponentCard(
     Card(modifier = modifier) {
         Box(
             modifier = Modifier.clickable {
-                onClick(LandingItem(title = item.title))
+                onClick(LandingItem(id = item.title))
             },
         ) {
             GeneralImageView(

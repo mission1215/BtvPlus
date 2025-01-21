@@ -1,3 +1,3 @@
 package com.skb.btvplus.navigator
 
-class LandingItem(var title: String? = null)
+data class LandingItem(val id : String? = null)

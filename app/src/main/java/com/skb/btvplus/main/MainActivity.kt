@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
                 val bootViewModel = hiltViewModel<BootViewModel>()
                 val bootConfig = bootViewModel.bootConfig.collectAsStateWithLifecycle().value
                 val rememberNavController = rememberNavController()
-                val sharedViewModel = hiltViewModel<SharedViewModel>()
-                sharedViewModel.landingItem = LandingItem()
+                val landingViewModel = hiltViewModel<SharedViewModel>()
+                landingViewModel.landingItem = LandingItem()
 
                 LaunchedEffect(key1 = bootViewModel) {
                     bootViewModel.navigationEvent.collect {
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
                     is UiState.Success -> {
                         Timber.d("UiState.Success, ${bootConfig.data}")
-                        NavigationHost(rememberNavController, Screens.Home, sharedViewModel)
+                        NavigationHost(rememberNavController, Screens.Home, landingViewModel)
                     }
 
                     is UiState.Error -> {
