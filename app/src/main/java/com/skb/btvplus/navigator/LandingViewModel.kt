@@ -14,5 +14,23 @@ class LandingViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,           // IO 작업 (네트워크/파일)
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,        // UI 작업
 ) : ViewModel() {
+
+    /**
+     * Home landing item
+     *
+     * @property id
+     * @constructor Create empty Home landing item
+     */
+    data class HomeLandingItem(val id: String? = null) : LandingItem
+
+    /**
+     * Detail landing item
+     *
+     * @property id
+     * @constructor Create empty Detail landing item
+     */
+    data class DetailLandingItem(val id: String? = null) : LandingItem
+
+
     var landingItem : LandingItem? = null
 }

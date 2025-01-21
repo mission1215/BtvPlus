@@ -28,8 +28,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
-import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.navigator.LandingViewModel
+import com.skb.btvplus.navigator.LandingViewModel.DetailLandingItem
+import com.skb.btvplus.navigator.LandingViewModel.HomeLandingItem
 import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
@@ -56,6 +57,7 @@ fun HomeScreen(
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
+    val landingItem = landingViewModel.landingItem as LandingViewModel.HomeLandingItem
     HandleNavigationEvents(homeViewModel, navController)
     ObserveLifeCycleEvents(
         callbackEvent = {
@@ -193,7 +195,11 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
                         ),
                         onClick = {
                             Timber.tag(TAG).d("GeneralComponentCard onClick :: $it")
-                            homeViewModel.sendEvent(NavigationEvent.NavigateToDetail(it))
+                            homeViewModel.sendEvent(
+                                NavigationEvent.NavigateToDetail(
+                                    DetailLandingItem(it.id)
+                                )
+                            )
                         }
                     )
                 }
@@ -212,7 +218,7 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
                 navController,
                 landingViewModel = hiltViewModel(),
                 Screens.Detail.route,
-                LandingItem(),
+                HomeLandingItem(),
             )
         }
 
