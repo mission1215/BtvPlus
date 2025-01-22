@@ -13,14 +13,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.skb.btvdomainlib.network.UiState
-import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.ui.theme.BtvPlusTheme
 import com.skb.btvplus.utils.LocalSharedViewModel
-import com.skb.mytvlibrary.navigator.NavigationHost
-import com.skb.mytvlibrary.navigator.Screens
+import com.skb.btvplus.navigator.NavigationHost
+import com.skb.btvplus.navigator.Screens
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import kotlin.apply
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

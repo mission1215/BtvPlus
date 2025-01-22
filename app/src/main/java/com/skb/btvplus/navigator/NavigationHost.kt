@@ -1,4 +1,4 @@
-package com.skb.mytvlibrary.navigator
+package com.skb.btvplus.navigator
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

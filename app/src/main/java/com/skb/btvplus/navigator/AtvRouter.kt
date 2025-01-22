@@ -2,8 +2,6 @@ package com.skb.btvplus.navigator
 
 import androidx.navigation.NavHostController
 import com.skb.btvplus.main.BaseNavItems
-import com.skb.btvplus.presenter.screen.detail.DetailNavItem
-import com.skb.mytvlibrary.navigator.Screens
 
 /**
  * Landing view type

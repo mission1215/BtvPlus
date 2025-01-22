@@ -1,4 +1,4 @@
-package com.skb.mytvlibrary.navigator
+package com.skb.btvplus.navigator
 
 import android.net.Uri
 import com.skb.btvplus.extensions.toJson
