@@ -21,10 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
+import com.skb.btvplus.presenter.screen.home.HandleNavigationEvents
+import com.skb.btvplus.utils.LocalSharedViewModel
 import timber.log.Timber
 
 /**
@@ -39,6 +42,11 @@ fun DetailScreen(
     navController: NavHostController,
 ) {
     Timber.d("DetailScreen: ${(landingItem as LandingItem)} ")
+
+    // FIXME: shared Data 사용법
+    val sharedData = LocalSharedViewModel.current.sharedData.collectAsStateWithLifecycle()
+    Timber.d("sharedData: ${sharedData.value?.title}")
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()

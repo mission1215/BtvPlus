@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class SharedData() {
-
+    var title: String? = null
 }
 
 @HiltViewModel
