@@ -4,10 +4,19 @@ import androidx.lifecycle.ViewModel
 import com.skb.btvdomainlib.di.DefaultDispatcher
 import com.skb.btvdomainlib.di.IoDispatcher
 import com.skb.btvdomainlib.di.MainDispatcher
-import com.skb.btvplus.navigator.LandingItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
+
+/**
+ * Detail landing item
+ *
+ * @property id
+ * @constructor Create empty Detail landing item
+ */
+data class DetailNavItem(
+    var id: String? = null
+)
 /**
  * Detail view model
  *

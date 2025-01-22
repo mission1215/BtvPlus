@@ -13,7 +13,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.skb.btvdomainlib.network.UiState
-import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.ui.theme.BtvPlusTheme
 import com.skb.btvplus.utils.LocalSharedViewModel
 import com.skb.mytvlibrary.navigator.NavigationHost
@@ -50,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             Timber.d("UiState.Success, ${bootConfig.data}")
                             NavigationHost(navController = rememberNavController,
                                 startDestination = Screens.Home,
-                                initialLandingItem = LandingItem().apply { id = "Home!!!" })
+                                initialNavItem = BaseNavItem().apply { id = "Home!!!" })
                         }
 
                         is UiState.Error -> {

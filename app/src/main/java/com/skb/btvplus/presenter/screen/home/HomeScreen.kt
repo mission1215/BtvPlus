@@ -27,18 +27,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
+import com.skb.btvplus.main.BaseNavItem
+import com.skb.btvplus.main.HandleNavigationEvents
 import com.skb.btvplus.main.NavigationEvent
 import com.skb.btvplus.main.SharedData
-import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import com.skb.btvplus.presenter.component.GeneralTab
 import com.skb.btvplus.presenter.component.ObserveLifeCycleEvents
 import com.skb.btvplus.presenter.component.TabItem
+import com.skb.btvplus.presenter.screen.detail.DetailNavItem
 import com.skb.btvplus.utils.LocalSharedViewModel
-import com.skb.mytvlibrary.navigator.LandingViewType
-import com.skb.mytvlibrary.navigator.navigationHostView
 import timber.log.Timber
 
 private const val TAG = "HomeScreen"
@@ -52,12 +52,12 @@ private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
-    landingItem: LandingItem?,
+    navItem: BaseNavItem?,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
-    Timber.d("landingItem: ${landingItem as LandingItem}")
+    Timber.d("landingItem: $navItem")
     LocalSharedViewModel.current.updateSharedData(SharedData().apply { title = "Home!!!" })
     HandleNavigationEvents(homeViewModel, navController)
     ObserveLifeCycleEvents(
@@ -197,34 +197,13 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
                         onClick = {
                             Timber.tag(TAG).d("GeneralComponentCard onClick :: $it")
                             homeViewModel.sendEvent(
-                                NavigationEvent.NavigateToDetail(LandingItem().apply { id = it.id })
+                                NavigationEvent.NavigateToDetail(DetailNavItem().apply { id = it.id })
                             )
                         }
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostController) {
-    val navigationEvent = homeViewModel.navigationEventState.collectAsStateWithLifecycle(null).value
-    Timber.d("EventListener $navigationEvent")
-    when (navigationEvent) {
-        is NavigationEvent.NavigateToDetail -> {
-            navigationHostView(
-                navController,
-                LandingViewType.Detail,
-                LandingItem().apply { id = "detail!!!" },
-            )
-        }
-
-        null -> {
-            Timber.d("EventListener null")
-        }
-
-        else -> {}
     }
 }
 

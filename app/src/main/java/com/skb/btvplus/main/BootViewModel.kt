@@ -7,7 +7,6 @@ import com.skb.btvdomainlib.di.IoDispatcher
 import com.skb.btvdomainlib.di.MainDispatcher
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvdomainlib.usecsae.BootUseCase
-import com.skb.btvplus.navigator.LandingItem
 import com.skb.mytvlibrary.server.service.heb.RespBootSettingInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,10 +31,6 @@ import javax.inject.Inject
  * @property mainDispatcher
  * @constructor Create empty Boot view model
  */
-sealed class NavigationEvent {
-    object NavigateToHome : NavigationEvent()
-    class NavigateToDetail(landingItem: LandingItem) : NavigationEvent()
-}
 
 @HiltViewModel
 class BootViewModel @Inject constructor(
@@ -49,13 +44,18 @@ class BootViewModel @Inject constructor(
 
     private val _bootConfig = MutableStateFlow<UiState<RespBootSettingInfo>>(UiState.Loading)
     val bootConfig: StateFlow<UiState<RespBootSettingInfo>> = _bootConfig.asStateFlow()
+    fun updateBootConfig(bootConfig: UiState<RespBootSettingInfo>) = run {
+        viewModelScope.launch(ioDispatcher) {
+            _bootConfig.emit(bootConfig)
+        }
+    }
 
     init {
         Timber.d("BootViewModel init()")
         viewModelScope.launch {
             val bootConfig = async { bootUseCase.getBootSettings() }.await()
-            _bootConfig.emit(bootConfig)
-            _navigationEvent.emit(NavigationEvent.NavigateToHome)
+            updateBootConfig(bootConfig)
+            _navigationEvent.emit(NavigationEvent.NavigateToHome())
         }
     }
 }
