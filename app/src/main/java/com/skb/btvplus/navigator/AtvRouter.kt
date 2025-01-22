@@ -1,43 +1,41 @@
-package com.skb.mytvlibrary.navigator
+package com.skb.btvplus.navigator
 
 import androidx.navigation.NavHostController
-import com.skb.btvplus.navigator.LandingItem
-import com.skb.btvplus.navigator.SharedViewModel
+import com.skb.btvplus.main.BaseNavItems
 
 /**
- * Navigation host view >  엡 내부에서 Navigation시 사용
+ * Landing view type
  *
- * @param navController
- * @param sharedViewModel
- * @param router
- * @param landingItem
+ * @constructor Create empty Landing view type
  */
-fun navigationHostView(
-    navController: NavHostController,
-    sharedViewModel: SharedViewModel,
-    router: String,
-    landingItem: LandingItem,
-) {
-    if (landingItem != null) {
-        sharedViewModel.landingItem = landingItem
-    }
+sealed class LandingViewType(){
+    object Home : LandingViewType()
+    object Detail : LandingViewType()
+}
 
-    when (router) {
-        Screens.Home.route -> {
-            navController.navigate(Screens.Home.route) {
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-
-        Screens.Detail.route -> {
-            landingItem.let {
-                navController.navigate(Screens.Detail.route) {
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        }
+/**
+ * Navigate to home
+ *
+ * @param detailNavItem
+ */
+fun NavHostController.navigateToHome(navItem: BaseNavItems) {
+    navigate(Screens.Home.route(navItem)) {
+        launchSingleTop = true
+        restoreState = true
     }
 }
+
+/**
+ * Navigate to detail
+ *
+ * @param detailNavItem
+ */
+fun NavHostController.navigateToDetail(navItem: BaseNavItems) {
+    navigate(Screens.Detail.route(navItem)) {
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+
 

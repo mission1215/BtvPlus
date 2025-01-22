@@ -21,5 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "BtvPlus"
 include(":app")
-include(":BtvPlayerLib")
+include(":CognacPlayerLib")
 include(":BtvDomainLib")

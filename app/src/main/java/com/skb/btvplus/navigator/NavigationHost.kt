@@ -1,52 +1,55 @@
-package com.skb.mytvlibrary.navigator
+package com.skb.btvplus.navigator
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.skb.btvplus.navigator.SharedViewModel
+import androidx.navigation.navArgument
+import com.skb.btvplus.extensions.fromJson
+import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.presenter.screen.detail.DetailScreen
 import com.skb.btvplus.presenter.screen.home.HomeScreen
 
 const val TAG = "NavigationHost"
+const val ARG_NAV_ITEM = "navItem"
 
 @Composable
 fun NavigationHost(
     navController: NavHostController,
     startDestination: Screens,
-    sharedViewModel: SharedViewModel,
+    initialNavItem: BaseNavItems, // 초기 LandingItem 추가
 ) {
-    NavHost(navController, startDestination = startDestination.route, enterTransition = {
-        slideInVertically(
-            initialOffsetY = { it },  // Slide in from the bottom
-            animationSpec = tween(durationMillis = 300)
-        ) + fadeIn(
-            animationSpec = tween(durationMillis = 300)
-        )
-    }, exitTransition = {
-        // No slide out transition, just fade out
-        fadeOut(
-            animationSpec = tween(durationMillis = 300)
-        )
-    }, popEnterTransition = {
-        // No slide in transition for popping back, just fade in
-        fadeIn(
-            animationSpec = tween(durationMillis = 300)
-        )
-    }, popExitTransition = {
-        slideOutVertically(
-            targetOffsetY = { it },  // Slide out to the bottom
-            animationSpec = tween(durationMillis = 300)
-        ) + fadeOut(
-            animationSpec = tween(durationMillis = 300)
-        )
-    }) {
-        composable(Screens.Home.route) { HomeScreen(sharedViewModel, navController) }
-        composable(Screens.Detail.route) { DetailScreen(sharedViewModel, navController) }
+    NavHost(navController, startDestination = startDestination.route) {
+        composable(
+            route = Screens.Home.route,
+            arguments = listOf(
+                navArgument("landingItem") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            // 네비게이션 경로에서 전달받은 LandingItem 또는 초기값 사용
+            val navItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
+            val navItem = navItemJson?.let { it.fromJson<BaseNavItems>() } ?: initialNavItem
+            HomeScreen(
+                navItem = navItem, navController = navController
+            )
+        }
+
+        composable(
+            route = Screens.Detail.route,
+            arguments = listOf(
+                navArgument("landingItem") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val navItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
+            val navItem = navItemJson?.let { it.fromJson<BaseNavItems>() } ?: initialNavItem
+
+            DetailScreen(
+                navItem = navItem, navController = navController
+            )
+        }
     }
 }
+
+
+

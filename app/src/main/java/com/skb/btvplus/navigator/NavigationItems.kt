@@ -1,21 +1,20 @@
-package com.skb.mytvlibrary.navigator
+package com.skb.btvplus.navigator
+
+import android.net.Uri
+import com.skb.btvplus.extensions.toJson
+import com.skb.btvplus.main.BaseNavItems
 
 sealed class Screens(val route: String) {
-    data object Home : Screens("Home")
-    data object Detail : Screens("Detail")
 
-//    data object Home : Screens("Home")
-//    data object Detail : Screens("Detail/{channelId}/{episodeId}") {
-//        fun route(channelId: String, episodeId: String) = "Detail/$channelId/$episodeId"
-//    }
-//
-//    data object Story : Screens("Story")
-//    data object YoutubeDetail : Screens("YoutubeDetail") {
-//        //fun route(youtubeVideoUrl: String) = "YoutubeDetail/$youtubeVideoUrl"
-//        fun route() = "YoutubeDetail"
-//    }
-//
-//    data object TestView : Screens("TestView/{testString}") {
-//        fun route(testString: String) = "TestView/$testString"
-//    }
+    object Home : Screens("home?landingItem={landingItem}") {
+        fun route(navItem: BaseNavItems): String {
+            return "home?landingItem=${Uri.encode(navItem.toJson())}"
+        }
+    }
+
+    object Detail : Screens("detail?landingItem={landingItem}") {
+        fun route(navItem: BaseNavItems): String {
+            return "detail?landingItem=${Uri.encode(navItem.toJson())}"
+        }
+    }
 }

@@ -21,6 +21,10 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        // BuildConfig로 라이브러리에 전달
+        buildConfigField("int", "APP_VERSION_CODE", versionCode.toString())
+        buildConfigField("String", "APP_VERSION_NAME", "\"$versionName\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,9 +74,9 @@ dependencies {
 
     //coil
     implementation(libs.coil.compose)
+    implementation(project(":CognacPlayerLib"))
 
     //add Library
-    implementation(project(":BtvPlayerLib"))
     implementation(project(":BtvDomainLib"))
 
     //Timber
@@ -80,6 +84,9 @@ dependencies {
 
     //dataStore
     implementation(libs.androidx.datastore.preferences)
+
+    //Media3
+    implementation(libs.media3.exoplayer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
