@@ -13,12 +13,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.skb.btvdomainlib.network.UiState
+import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.ui.theme.BtvPlusTheme
 import com.skb.btvplus.utils.LocalSharedViewModel
 import com.skb.mytvlibrary.navigator.NavigationHost
 import com.skb.mytvlibrary.navigator.Screens
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import kotlin.apply
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             Timber.d("UiState.Success, ${bootConfig.data}")
                             NavigationHost(navController = rememberNavController,
                                 startDestination = Screens.Home,
-                                initialNavItem = BaseNavItem().apply { id = "Home!!!" })
+                                initialNavItem = BaseNavItems.HomeNavItem(id = "Home"))
                         }
 
                         is UiState.Error -> {

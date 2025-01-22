@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import com.skb.btvplus.utils.LocalSharedViewModel
@@ -35,11 +36,11 @@ import timber.log.Timber
  */
 @Composable
 fun DetailScreen(
-    landingItem: DetailNavItem?,
+    navItem: BaseNavItems?,
     detailViewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
-    Timber.d("DetailScreen:landingItem =  ${(landingItem as DetailNavItem)} ")
+    Timber.d("DetailScreen:landingItem =  ${(navItem is DetailNavItem)} ")
 
     // FIXME: shared Data 사용법
     val sharedData = LocalSharedViewModel.current.sharedData.collectAsStateWithLifecycle()

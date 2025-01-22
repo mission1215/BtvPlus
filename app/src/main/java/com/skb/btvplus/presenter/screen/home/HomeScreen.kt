@@ -27,7 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
-import com.skb.btvplus.main.BaseNavItem
+import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.main.HandleNavigationEvents
 import com.skb.btvplus.main.NavigationEvent
 import com.skb.btvplus.main.SharedData
@@ -39,6 +39,7 @@ import com.skb.btvplus.presenter.component.ObserveLifeCycleEvents
 import com.skb.btvplus.presenter.component.TabItem
 import com.skb.btvplus.presenter.screen.detail.DetailNavItem
 import com.skb.btvplus.utils.LocalSharedViewModel
+import kotlinx.android.extensions.LayoutContainer
 import timber.log.Timber
 
 private const val TAG = "HomeScreen"
@@ -52,7 +53,7 @@ private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
-    navItem: BaseNavItem?,
+    navItem: BaseNavItems,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
@@ -197,7 +198,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
                         onClick = {
                             Timber.tag(TAG).d("GeneralComponentCard onClick :: $it")
                             homeViewModel.sendEvent(
-                                NavigationEvent.NavigateToDetail(DetailNavItem().apply { id = it.id })
+                                NavigationEvent.NavigateToDetail(BaseNavItems.DetailNavItem(id = "Detail"))
                             )
                         }
                     )

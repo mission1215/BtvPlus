@@ -25,6 +25,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
+ * Detail landing item
+ *
+ * @property id
+ * @constructor Create empty Detail landing item
+ */
+data class HomeNavItem(
+    var id: String? = null
+)
+
+/**
  * Home view model
  *
  * @property defaultDispatcher

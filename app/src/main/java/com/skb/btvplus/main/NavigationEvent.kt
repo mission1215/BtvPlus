@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import com.skb.btvplus.presenter.screen.detail.DetailNavItem
 import com.skb.btvplus.presenter.screen.home.HomeViewModel
 import com.skb.btvplus.navigator.navigateToDetail
+import com.skb.btvplus.presenter.screen.home.HomeNavItem
 import timber.log.Timber
 
 /**
@@ -14,8 +15,8 @@ import timber.log.Timber
  * @constructor Create empty Navigation event
  */
 sealed class NavigationEvent {
-    class NavigateToHome(landingItem: BaseNavItem? = null) : NavigationEvent()
-    class NavigateToDetail(landingItem: DetailNavItem? = null) : NavigationEvent()
+    class NavigateToHome(navItem: BaseNavItems? = null) : NavigationEvent()
+    class NavigateToDetail(navItem: BaseNavItems? = null) : NavigationEvent()
 }
 
 @Composable
@@ -24,7 +25,7 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
     Timber.d("EventListener $navigationEvent")
     when (navigationEvent) {
         is NavigationEvent.NavigateToDetail -> {
-            navController.navigateToDetail(DetailNavItem())
+            navController.navigateToDetail(BaseNavItems.DetailNavItem(id = "Detail"))
         }
 
         null -> {

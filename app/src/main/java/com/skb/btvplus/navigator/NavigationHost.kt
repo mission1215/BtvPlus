@@ -7,8 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.skb.btvplus.extensions.fromJson
-import com.skb.btvplus.main.BaseNavItem
-import com.skb.btvplus.presenter.screen.detail.DetailNavItem
+import com.skb.btvplus.main.BaseNavItems
 import com.skb.btvplus.presenter.screen.detail.DetailScreen
 import com.skb.btvplus.presenter.screen.home.HomeScreen
 
@@ -19,7 +18,7 @@ const val ARG_NAV_ITEM = "navItem"
 fun NavigationHost(
     navController: NavHostController,
     startDestination: Screens,
-    initialNavItem: BaseNavItem, // 초기 LandingItem 추가
+    initialNavItem: BaseNavItems, // 초기 LandingItem 추가
 ) {
     NavHost(navController, startDestination = startDestination.route) {
         composable(
@@ -28,13 +27,11 @@ fun NavigationHost(
                 navArgument("landingItem") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            // 초기 LandingItem 또는 네비게이션 경로에서 전달받은 LandingItem 사용
-            val landingItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
-            val landingItem = landingItemJson?.let { it.fromJson() } ?: initialNavItem
-
+            // 네비게이션 경로에서 전달받은 LandingItem 또는 초기값 사용
+            val navItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
+            val navItem = navItemJson?.let { it.fromJson<BaseNavItems>() } ?: initialNavItem
             HomeScreen(
-                navItem = landingItem,
-                navController = navController
+                navItem = navItem, navController = navController
             )
         }
 
@@ -44,12 +41,11 @@ fun NavigationHost(
                 navArgument("landingItem") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val landingItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
-            val landingItem = landingItemJson?.let { it.fromJson() } ?: DetailNavItem()
+            val navItemJson = backStackEntry.arguments?.getString(ARG_NAV_ITEM)
+            val navItem = navItemJson?.let { it.fromJson<BaseNavItems>() } ?: initialNavItem
 
             DetailScreen(
-                landingItem = landingItem,
-                navController = navController
+                navItem = navItem, navController = navController
             )
         }
     }

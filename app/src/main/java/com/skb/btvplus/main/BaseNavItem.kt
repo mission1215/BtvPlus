@@ -1,11 +1,12 @@
 package com.skb.btvplus.main
 
+
 /**
- * Base nav item
+ * Base nav items
  *
- * @constructor Create empty Base nav item
+ * @constructor Create empty Base nav items
  */
-data class BaseNavItem(
-    var id: String? = null,
-    val name: String? = null,
-)
+sealed class BaseNavItems {
+    data class HomeNavItem(val id: String? = null) : BaseNavItems()
+    data class DetailNavItem(val id: String? = null) : BaseNavItems()
+}
