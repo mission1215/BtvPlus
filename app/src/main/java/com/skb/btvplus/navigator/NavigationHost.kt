@@ -1,14 +1,14 @@
 package com.skb.mytvlibrary.navigator
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.skb.btvplus.navigator.LandingViewModel
-import com.skb.btvplus.presenter.screen.detail.DetailLandingItem
+import androidx.navigation.navArgument
+import com.skb.btvplus.extensions.fromJson
+import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.presenter.screen.detail.DetailScreen
-import com.skb.btvplus.presenter.screen.home.HomeLandingItem
 import com.skb.btvplus.presenter.screen.home.HomeScreen
 
 const val TAG = "NavigationHost"
@@ -17,23 +17,41 @@ const val TAG = "NavigationHost"
 fun NavigationHost(
     navController: NavHostController,
     startDestination: Screens,
+    initialLandingItem: LandingItem // 초기 LandingItem 추가
 ) {
     NavHost(navController, startDestination = startDestination.route) {
-        composable(Screens.Home.route) {
+        composable(
+            route = Screens.Home.route,
+            arguments = listOf(
+                navArgument("landingItem") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            // 초기 LandingItem 또는 네비게이션 경로에서 전달받은 LandingItem 사용
+            val landingItemJson = backStackEntry.arguments?.getString("landingItem")
+            val landingItem = landingItemJson?.let { it.fromJson() } ?: initialLandingItem
+
             HomeScreen(
-                landingViewModel = hiltViewModel<LandingViewModel>().apply {
-                    updateLandingItem(HomeLandingItem(id = "init home"))
-                },
+                landingItem = landingItem,
                 navController = navController
             )
         }
-        composable(Screens.Detail.route) {
+
+        composable(
+            route = Screens.Detail.route,
+            arguments = listOf(
+                navArgument("landingItem") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val landingItemJson = backStackEntry.arguments?.getString("landingItem")
+            val landingItem = landingItemJson?.let { it.fromJson() } ?: initialLandingItem
+
             DetailScreen(
-                landingViewModel = hiltViewModel<LandingViewModel>().apply {
-                    updateLandingItem(DetailLandingItem(id = "init detail"))
-                },
+                landingItem = landingItem,
                 navController = navController
             )
         }
     }
 }
+
+
+

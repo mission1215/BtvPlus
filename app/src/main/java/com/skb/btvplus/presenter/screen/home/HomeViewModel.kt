@@ -3,6 +3,7 @@ package com.skb.btvplus.presenter.screen.home
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.skb.btvdomainlib.di.DefaultDispatcher
 import com.skb.btvdomainlib.di.IoDispatcher
 import com.skb.btvdomainlib.di.MainDispatcher
@@ -10,6 +11,7 @@ import com.skb.btvdomainlib.network.UiState
 import com.skb.btvdomainlib.network.carbon.ResponseListShelfInfoResDto
 import com.skb.btvdomainlib.network.carbon.ResponseListShelfResDto
 import com.skb.btvdomainlib.repository.HomeApiRepository
+import com.skb.btvplus.main.NavigationEvent
 import com.skb.btvplus.navigator.LandingItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,16 +31,6 @@ import javax.inject.Inject
  *
  * @constructor Create empty Navigation event
  */
-sealed class NavigationEvent {
-    class NavigateToDetail(ladingItem: LandingItem) : NavigationEvent()
-}
-
-/**
- * Detail landing item
- *
- * @constructor Create empty Detail landing item
- */
-data class HomeLandingItem(val id : String? = null) : LandingItem {}
 
 /**
  * Home view model

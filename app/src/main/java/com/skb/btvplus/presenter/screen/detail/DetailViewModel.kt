@@ -8,9 +8,6 @@ import com.skb.btvplus.navigator.LandingItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
-
-
-data class DetailLandingItem(val id: String? = null) : LandingItem
 /**
  * Detail view model
  *

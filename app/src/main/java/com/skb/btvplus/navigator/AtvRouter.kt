@@ -2,8 +2,12 @@ package com.skb.mytvlibrary.navigator
 
 import androidx.navigation.NavHostController
 import com.skb.btvplus.navigator.LandingItem
-import com.skb.btvplus.navigator.LandingViewModel
+import timber.log.Timber
 
+sealed class LandingViewType(){
+    object Home : LandingViewType()
+    object Detail : LandingViewType()
+}
 /**
  * Navigation host view >  엡 내부에서 Navigation시 사용
  *
@@ -14,25 +18,20 @@ import com.skb.btvplus.navigator.LandingViewModel
  */
 fun navigationHostView(
     navController: NavHostController,
-    landingViewModel: LandingViewModel,
-    router: String,
+    ladingViewType: LandingViewType,
     landingItem: LandingItem,
 ) {
-    if (landingItem != null) {
-        landingViewModel.apply { updateLandingItem(landingItem) }
-    }
-
-    when (router) {
-        Screens.Home.route -> {
-            navController.navigate(Screens.Home.route) {
+    when (ladingViewType) {
+        LandingViewType.Home -> {
+            navController.navigate(Screens.Home.route(landingItem)) {
                 launchSingleTop = true
                 restoreState = true
             }
         }
 
-        Screens.Detail.route -> {
+        LandingViewType.Detail  -> {
             landingItem.let {
-                navController.navigate(Screens.Detail.route) {
+                navController.navigate(Screens.Detail.route(landingItem)) {
                     launchSingleTop = true
                     restoreState = true
                 }

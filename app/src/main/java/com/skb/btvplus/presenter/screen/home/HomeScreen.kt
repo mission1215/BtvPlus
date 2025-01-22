@@ -16,11 +16,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -29,15 +27,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.btvdomainlib.network.UiState
-import com.skb.btvplus.navigator.LandingViewModel
+import com.skb.btvplus.main.NavigationEvent
+import com.skb.btvplus.navigator.LandingItem
 import com.skb.btvplus.presenter.component.GeneralAppBar
 import com.skb.btvplus.presenter.component.GeneralComponentCard
 import com.skb.btvplus.presenter.component.GeneralComponentCardItem
 import com.skb.btvplus.presenter.component.GeneralTab
 import com.skb.btvplus.presenter.component.ObserveLifeCycleEvents
 import com.skb.btvplus.presenter.component.TabItem
-import com.skb.btvplus.presenter.screen.detail.DetailLandingItem
-import com.skb.mytvlibrary.navigator.Screens
+import com.skb.mytvlibrary.navigator.LandingViewType
 import com.skb.mytvlibrary.navigator.navigationHostView
 import timber.log.Timber
 
@@ -52,17 +50,12 @@ private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
-    landingViewModel: LandingViewModel,
+    landingItem: LandingItem?,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
     Timber.d("$TAG:: init")
-    val landingItem = landingViewModel.landingItemState.collectAsState(null)
-    Timber.d("landingItem: $landingItem")
-    LaunchedEffect(key1 = landingItem) {
-
-    }
-
+    Timber.d("landingItem: ${landingItem as LandingItem}")
     HandleNavigationEvents(homeViewModel, navController)
     ObserveLifeCycleEvents(
         callbackEvent = {
@@ -201,9 +194,7 @@ fun LayoutContainer(modifier: Modifier, homeViewModel: HomeViewModel) {
                         onClick = {
                             Timber.tag(TAG).d("GeneralComponentCard onClick :: $it")
                             homeViewModel.sendEvent(
-                                NavigationEvent.NavigateToDetail(
-                                    DetailLandingItem(it.id)
-                                )
+                                NavigationEvent.NavigateToDetail(LandingItem().apply { id = it.id })
                             )
                         }
                     )
@@ -221,15 +212,16 @@ fun HandleNavigationEvents(homeViewModel: HomeViewModel, navController: NavHostC
         is NavigationEvent.NavigateToDetail -> {
             navigationHostView(
                 navController,
-                landingViewModel = hiltViewModel(),
-                Screens.Detail.route,
-                DetailLandingItem(id = "detail test"),
+                LandingViewType.Detail,
+                LandingItem().apply { id = "detail!!!" },
             )
         }
 
         null -> {
             Timber.d("EventListener null")
         }
+
+        else -> {}
     }
 }
 
@@ -240,8 +232,8 @@ fun updateContent(selectedTabIndex: Int, homeViewModel: HomeViewModel) {
 @Composable
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
-    HomeScreen(
-        landingViewModel = hiltViewModel<LandingViewModel>(),
-        navController = NavHostController(LocalContext.current)
-    )
+//    HomeScreen(
+//        landingViewModel = hiltViewModel<LandingViewModel>(),
+//        navController = NavHostController(LocalContext.current)
+//    )
 }

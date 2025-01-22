@@ -7,6 +7,7 @@ import com.skb.btvdomainlib.di.IoDispatcher
 import com.skb.btvdomainlib.di.MainDispatcher
 import com.skb.btvdomainlib.network.UiState
 import com.skb.btvdomainlib.usecsae.BootUseCase
+import com.skb.btvplus.navigator.LandingItem
 import com.skb.mytvlibrary.server.service.heb.RespBootSettingInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -33,6 +34,7 @@ import javax.inject.Inject
  */
 sealed class NavigationEvent {
     object NavigateToHome : NavigationEvent()
+    class NavigateToDetail(landingItem: LandingItem) : NavigationEvent()
 }
 
 @HiltViewModel
