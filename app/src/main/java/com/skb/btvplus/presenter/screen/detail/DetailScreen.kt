@@ -40,7 +40,7 @@ fun DetailScreen(
     detailViewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
-    Timber.d("DetailScreen:landingItem =  ${(navItem is DetailNavItem)} ")
+    Timber.d("DetailScreen:navITem =  ${navItem as BaseNavItems}")
 
     // FIXME: shared Data 사용법
     val sharedData = LocalSharedViewModel.current.sharedData.collectAsStateWithLifecycle()

@@ -74,9 +74,9 @@ dependencies {
 
     //coil
     implementation(libs.coil.compose)
+    implementation(project(":CognacPlayerLib"))
 
     //add Library
-    implementation(project(":BtvPlayerLib"))
     implementation(project(":BtvDomainLib"))
 
     //Timber
@@ -84,6 +84,9 @@ dependencies {
 
     //dataStore
     implementation(libs.androidx.datastore.preferences)
+
+    //Media3
+    implementation(libs.media3.exoplayer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

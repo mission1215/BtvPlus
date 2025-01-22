@@ -20,6 +20,7 @@ material = "1.12.0"
 testng = "6.9.6"
 androidxPaging = "3.3.5"        # https://developer.android.com/jetpack/androidx/releases/paging
 androidxDataStore = "1.0.0"     # https://developer.android.com/jetpack/androidx/releases/datastore
+media3Version = "1.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -71,6 +72,12 @@ testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 
 #dataStore
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDataStore" }
+
+#media3
+media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Version" }
+media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Version" }
+media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Version" }
+media3-exoplayer-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3Version" }
 
 [plugins]
 

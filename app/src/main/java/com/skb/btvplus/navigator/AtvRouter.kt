@@ -19,7 +19,7 @@ sealed class LandingViewType(){
  * @param detailNavItem
  */
 fun NavHostController.navigateToHome(navItem: BaseNavItems) {
-    navigate(Screens.Detail.route(navItem)) {
+    navigate(Screens.Home.route(navItem)) {
         launchSingleTop = true
         restoreState = true
     }
