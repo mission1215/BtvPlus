@@ -12,11 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.skb.bourbondomainlib.network.UiState
-import com.skb.bourbon.ui.theme.BourbonTheme
-import com.skb.bourbon.utils.LocalSharedViewModel
 import com.skb.bourbon.navigator.NavigationHost
 import com.skb.bourbon.navigator.Screens
+import com.skb.bourbon.ui.theme.BourbonTheme
+import com.skb.bourbon.utils.LocalSharedViewModel
+import com.skb.bourbondomainlib.network.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         is UiState.Success -> {
                             Timber.d("UiState.Success, ${bootConfig.data}")
                             NavigationHost(navController = rememberNavController,
-                                startDestination = Screens.Home,
+                                startDestination = Screens.Home(),
                                 initialNavItem = BaseNavItems.HomeNavItem(id = "Home"))
                         }
 

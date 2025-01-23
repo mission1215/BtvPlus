@@ -1,20 +1,24 @@
 package com.skb.bourbon.navigator
 
 import android.net.Uri
-import com.skb.bourbon.extensions.toJson
 import com.skb.bourbon.main.BaseNavItems
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 sealed class Screens(val route: String) {
-
-    object Home : Screens("home?navItem={navItem}") {
-        fun route(navItem: BaseNavItems): String {
-            return "home?navItem=${Uri.encode(navItem.toJson())}"
+    data class Home(val navItem: BaseNavItems.HomeNavItem? = null) : Screens("home") {
+        fun route(): String {
+            return if (navItem != null) {
+                "home?navItem=${Uri.encode(Json.encodeToString(navItem))}"
+            } else {
+                "home"
+            }
         }
     }
 
-    object Detail : Screens("detail?navItem={navItem}") { // Updated to match "navItem"
-        fun route(navItem: BaseNavItems): String {
-            return "detail?navItem=${Uri.encode(navItem.toJson())}"
+    data class Detail(val navItem: BaseNavItems.DetailNavItem) : Screens("detail") {
+        fun route(): String {
+            return "detail?navItem=${Uri.encode(Json.encodeToString(navItem))}"
         }
     }
 }

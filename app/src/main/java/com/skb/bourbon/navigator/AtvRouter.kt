@@ -18,8 +18,8 @@ sealed class LandingViewType(){
  *
  * @param detailNavItem
  */
-fun NavHostController.navigateToHome(navItem: BaseNavItems) {
-    navigate(Screens.Home.route(navItem)) {
+fun NavHostController.navigateToHome(navItem: BaseNavItems.HomeNavItem) {
+    navigate(Screens.Home(navItem).route()) {
         launchSingleTop = true
         restoreState = true
     }
@@ -30,8 +30,8 @@ fun NavHostController.navigateToHome(navItem: BaseNavItems) {
  *
  * @param detailNavItem
  */
-fun NavHostController.navigateToDetail(navItem: BaseNavItems) {
-    navigate(Screens.Detail.route(navItem)) {
+fun NavHostController.navigateToDetail(navItem: BaseNavItems.DetailNavItem) {
+    navigate(Screens.Detail(navItem).route()) {
         launchSingleTop = true
         restoreState = true
     }

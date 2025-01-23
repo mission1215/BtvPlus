@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.kapt) // Kapt 플러그인 활성화
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
 }
 
@@ -87,6 +88,9 @@ dependencies {
 
     //Media3
     implementation(libs.media3.exoplayer)
+
+    //serialization
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
