@@ -16,7 +16,7 @@ import com.skb.bourbon.navigator.NavigationHost
 import com.skb.bourbon.navigator.Screens
 import com.skb.bourbon.ui.theme.BourbonTheme
 import com.skb.bourbon.utils.LocalSharedViewModel
-import com.skb.bourbondomainlib.network.UiState
+import com.skb.bourbon_network.network.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

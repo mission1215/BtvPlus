@@ -1,9 +1,9 @@
 package com.skb.bourbon.presenter.screen.detail
 
 import androidx.lifecycle.ViewModel
-import com.skb.bourbondomainlib.di.DefaultDispatcher
-import com.skb.bourbondomainlib.di.IoDispatcher
-import com.skb.bourbondomainlib.di.MainDispatcher
+import com.skb.bourbon_network.di.DefaultDispatcher
+import com.skb.bourbon_network.di.IoDispatcher
+import com.skb.bourbon_network.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject

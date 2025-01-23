@@ -75,10 +75,6 @@ dependencies {
 
     //coil
     implementation(libs.coil.compose)
-    implementation(project(":CognacPlayerLib"))
-
-    //add Library
-    implementation(project(":BourbonDomainLib"))
 
     //Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -91,6 +87,12 @@ dependencies {
 
     //serialization
     implementation(libs.kotlinx.serialization.json)
+
+    //add Library
+    implementation(project(":CognacPlayerLib"))
+    implementation(project(":bourbon-utils"))
+    implementation(project(":burbon-notifications"))
+    implementation(project(":bourbon-networks"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

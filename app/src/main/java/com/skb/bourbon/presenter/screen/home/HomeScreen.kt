@@ -37,7 +37,7 @@ import com.skb.bourbon.presenter.component.GeneralTab
 import com.skb.bourbon.presenter.component.ObserveLifeCycleEvents
 import com.skb.bourbon.presenter.component.TabItem
 import com.skb.bourbon.utils.LocalSharedViewModel
-import com.skb.bourbondomainlib.network.UiState
+import com.skb.bourbon_network.network.UiState
 import timber.log.Timber
 
 private const val TAG = "HomeScreen"

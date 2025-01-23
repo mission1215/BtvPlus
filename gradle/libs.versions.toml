@@ -19,7 +19,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 testng = "6.9.6"
 androidxPaging = "3.3.5"        # https://developer.android.com/jetpack/androidx/releases/paging
-androidxDataStore = "1.0.0"     # https://developer.android.com/jetpack/androidx/releases/datastore
+androidxDataStore = "1.1.2"     # https://developer.android.com/jetpack/androidx/releases/datastore
 media3Version = "1.5.1"
 serialization = "1.6.0"
 

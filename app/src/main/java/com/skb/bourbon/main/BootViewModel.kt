@@ -2,11 +2,11 @@ package com.skb.bourbon.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skb.bourbondomainlib.di.DefaultDispatcher
-import com.skb.bourbondomainlib.di.IoDispatcher
-import com.skb.bourbondomainlib.di.MainDispatcher
-import com.skb.bourbondomainlib.network.UiState
-import com.skb.bourbondomainlib.usecsae.BootUseCase
+import com.skb.bourbon_network.di.DefaultDispatcher
+import com.skb.bourbon_network.di.IoDispatcher
+import com.skb.bourbon_network.di.MainDispatcher
+import com.skb.bourbon_network.network.UiState
+import com.skb.bourbon_network.usecsae.BootUseCase
 import com.skb.mytvlibrary.server.service.heb.RespBootSettingInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

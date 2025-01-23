@@ -1,9 +1,9 @@
 package com.skb.bourbon.di
 
-import com.skb.bourbondomainlib.di.DefaultDispatcher
-import com.skb.bourbondomainlib.di.IoDispatcher
-import com.skb.bourbondomainlib.di.MainDispatcher
-import com.skb.bourbondomainlib.di.MainImmediateDispatcher
+import com.skb.bourbon_network.di.DefaultDispatcher
+import com.skb.bourbon_network.di.IoDispatcher
+import com.skb.bourbon_network.di.MainDispatcher
+import com.skb.bourbon_network.di.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

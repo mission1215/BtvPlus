@@ -22,4 +22,8 @@ dependencyResolutionManagement {
 rootProject.name = "Bourbon"
 include(":app")
 include(":CognacPlayerLib")
-include(":BourbonDomainLib")
+include(":bourbon-utils")
+include(":burbon-notifications")
+include("bourbon-networks")
+include(":bourbon-webview")
+include(":bourbon-logs")
