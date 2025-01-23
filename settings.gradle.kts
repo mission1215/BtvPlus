@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BtvPlus"
+rootProject.name = "Bourbon"
 include(":app")
 include(":CognacPlayerLib")
-include(":BtvDomainLib")
+include(":BourbonDomainLib")

@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.skb.btvplus"
+    namespace = "com.skb.bourbon"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.skb.btvplus"
+        applicationId = "com.skb.bourbon"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -77,7 +77,7 @@ dependencies {
     implementation(project(":CognacPlayerLib"))
 
     //add Library
-    implementation(project(":BtvDomainLib"))
+    implementation(project(":BourbonDomainLib"))
 
     //Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
