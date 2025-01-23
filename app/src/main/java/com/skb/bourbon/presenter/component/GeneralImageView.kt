@@ -3,6 +3,7 @@ package com.skb.bourbon.presenter.component
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.skb.bourbon.R
 import kotlin.let
 import kotlin.text.isNullOrEmpty
 
@@ -54,7 +56,7 @@ sealed class ImageState {
 fun GeneralImageView(
     modifier: Modifier = Modifier,
     imagePath: String?,
-//    defaultImage: Painter? = painterResource(R.drawable.ic_media),
+    defaultImage: Painter = painterResource(R.drawable.ic_media),
     isCache: Boolean = true,
     isDim: Boolean = false,
     contentScale: ContentScale = ContentScale.FillWidth,
@@ -66,11 +68,11 @@ fun GeneralImageView(
     Box(modifier = modifier) {
         if (imagePath.isNullOrEmpty()) {
             // 기본 이미지 표시
-//            Image(
-//                modifier = modifier,
-//                painter = defaultImage,
-//                contentDescription = "Default Icon",
-//            )
+            Image(
+                modifier = modifier,
+                painter = defaultImage,
+                contentDescription = "Default Icon",
+            )
         } else {
             // Coil의 ImageRequest 생성
             val imageRequest = ImageRequest.Builder(context).data(imagePath).crossfade(true).build()
@@ -83,10 +85,10 @@ fun GeneralImageView(
                 modifier = modifier,
                 contentScale = contentScale,
                 loading = {
-//                    DefaultMediaImage(Modifier, defaultImage)
+                    DefaultMediaImage(Modifier, defaultImage)
                 },
                 error = {
-//                    DefaultMediaImage(Modifier, defaultImage)
+                    DefaultMediaImage(Modifier, defaultImage)
                     onError()
                 })
 

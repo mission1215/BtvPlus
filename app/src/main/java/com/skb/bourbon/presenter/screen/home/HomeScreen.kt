@@ -51,7 +51,7 @@ private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
-    navItem: BaseNavItems,
+    navItem: BaseNavItems.HomeNavItem,
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {

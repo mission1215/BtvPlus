@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.skb.bourbon.R
 
 /**
  * General app bar
@@ -42,11 +44,11 @@ fun GeneralAppBar(
     }, navigationIcon = {
         if (onBackClick != null) {
             IconButton(onClick = onBackClick) {
-//                Icon(
-//                    painterResource(R.drawable.ic_backward),
-//                    contentDescription = "Back",
-//                    tint = Color.Black
-//                )
+                Icon(
+                    painterResource(R.drawable.ic_backward),
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
             }
         }
     }, actions = actions, colors = TopAppBarDefaults.topAppBarColors(

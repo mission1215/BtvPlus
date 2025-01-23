@@ -36,7 +36,7 @@ import timber.log.Timber
  */
 @Composable
 fun DetailScreen(
-    navItem: BaseNavItems?,
+    navItem: BaseNavItems.DetailNavItem?,
     detailViewModel: DetailViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {

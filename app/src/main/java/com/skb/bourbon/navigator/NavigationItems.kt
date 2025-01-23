@@ -6,15 +6,15 @@ import com.skb.bourbon.main.BaseNavItems
 
 sealed class Screens(val route: String) {
 
-    object Home : Screens("home?landingItem={landingItem}") {
+    object Home : Screens("home?navItem={navItem}") {
         fun route(navItem: BaseNavItems): String {
-            return "home?landingItem=${Uri.encode(navItem.toJson())}"
+            return "home?navItem=${Uri.encode(navItem.toJson())}"
         }
     }
 
-    object Detail : Screens("detail?landingItem={landingItem}") {
+    object Detail : Screens("detail?navItem={navItem}") { // Updated to match "navItem"
         fun route(navItem: BaseNavItems): String {
-            return "detail?landingItem=${Uri.encode(navItem.toJson())}"
+            return "detail?navItem=${Uri.encode(navItem.toJson())}"
         }
     }
 }
