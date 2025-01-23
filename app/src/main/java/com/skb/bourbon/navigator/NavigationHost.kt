@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.skb.bourbon.main.BaseNavItems
 import com.skb.bourbon.presenter.screen.detail.DetailScreen
 import com.skb.bourbon.presenter.screen.home.HomeScreen
 import kotlinx.serialization.json.Json

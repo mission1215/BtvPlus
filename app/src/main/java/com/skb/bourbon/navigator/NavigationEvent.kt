@@ -1,10 +1,9 @@
-package com.skb.bourbon.main
+package com.skb.bourbon.navigator
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.skb.bourbon.presenter.screen.home.HomeViewModel
-import com.skb.bourbon.navigator.navigateToDetail
 import timber.log.Timber
 
 /**

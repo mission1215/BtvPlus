@@ -10,7 +10,7 @@ import com.skb.bourbon_network.network.UiState
 import com.skb.bourbon_network.network.carbon.ResponseListShelfInfoResDto
 import com.skb.bourbon_network.network.carbon.ResponseListShelfResDto
 import com.skb.bourbon_network.repository.HomeApiRepository
-import com.skb.bourbon.main.NavigationEvent
+import com.skb.bourbon.navigator.NavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async

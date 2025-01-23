@@ -2,6 +2,7 @@ package com.skb.bourbon.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skb.bourbon.navigator.NavigationEvent
 import com.skb.bourbon_network.di.DefaultDispatcher
 import com.skb.bourbon_network.di.IoDispatcher
 import com.skb.bourbon_network.di.MainDispatcher
@@ -41,7 +42,6 @@ class BootViewModel @Inject constructor(
 ) : ViewModel() {
     private val _navigationEvent = MutableSharedFlow<NavigationEvent>()
     val navigationEvent: SharedFlow<NavigationEvent> = _navigationEvent.asSharedFlow()
-
     private val _bootConfig = MutableStateFlow<UiState<RespBootSettingInfo>>(UiState.Loading)
     val bootConfig: StateFlow<UiState<RespBootSettingInfo>> = _bootConfig.asStateFlow()
     fun updateBootConfig(bootConfig: UiState<RespBootSettingInfo>) = run {

@@ -1,7 +1,7 @@
 package com.skb.bourbon.navigator
 
 import androidx.navigation.NavHostController
-import com.skb.bourbon.main.BaseNavItems
+
 /**
  * Navigate to home
  *

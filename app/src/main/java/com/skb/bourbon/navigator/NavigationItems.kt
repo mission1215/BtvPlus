@@ -1,7 +1,6 @@
 package com.skb.bourbon.navigator
 
 import android.net.Uri
-import com.skb.bourbon.main.BaseNavItems
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

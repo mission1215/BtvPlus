@@ -26,9 +26,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.skb.bourbon.main.BaseNavItems
-import com.skb.bourbon.main.HandleNavigationEvents
-import com.skb.bourbon.main.NavigationEvent
+import com.skb.bourbon.navigator.BaseNavItems
+import com.skb.bourbon.navigator.HandleNavigationEvents
+import com.skb.bourbon.navigator.NavigationEvent
 import com.skb.bourbon.main.SharedData
 import com.skb.bourbon.presenter.component.GeneralAppBar
 import com.skb.bourbon.presenter.component.GeneralComponentCard

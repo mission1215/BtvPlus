@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import com.skb.bourbon.navigator.BaseNavItems
 import com.skb.bourbon.navigator.NavigationHost
 import com.skb.bourbon.navigator.Screens
 import com.skb.bourbon.ui.theme.BourbonTheme
@@ -51,7 +52,6 @@ class MainActivity : ComponentActivity() {
                                 startDestination = Screens.Home(),
                                 initialNavItem = BaseNavItems.HomeNavItem(id = "Home"))
                         }
-
                         is UiState.Error -> {
                             Timber.d("UiState.Error, ${bootConfig.message} ")
                             // Show error message

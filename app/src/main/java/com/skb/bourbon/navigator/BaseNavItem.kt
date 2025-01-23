@@ -1,4 +1,4 @@
-package com.skb.bourbon.main
+package com.skb.bourbon.navigator
 
 import kotlinx.serialization.Serializable
 
