@@ -7,8 +7,6 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.VideoSize
-import androidx.media3.common.text.CueGroup
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util
 import androidx.media3.datasource.DefaultHttpDataSource
@@ -18,6 +16,16 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.skb.cognacplayerlib.data.CognacData
 import timber.log.Timber
+
+sealed class MediaState {
+    data object Idle: MediaState()
+    data object Play: MediaState()
+    data object RenderedFirstFrame: MediaState()
+    data object Pause: MediaState()
+    data object Stop: MediaState()
+    data object Complete: MediaState()
+    data class Error(val error: PlaybackException): MediaState()
+}
 
 @UnstableApi
 class CognacPlayer(
@@ -50,35 +58,8 @@ class CognacPlayer(
         )
         .build()
 
-    private val listener = object : Player.Listener {
-        override fun onPlaybackStateChanged(playbackState: Int) {
-            super.onPlaybackStateChanged(playbackState)
-            Timber.d(TAG, "playbackState : $playbackState")
-        }
-
-        override fun onPlayerError(error: PlaybackException) {
-            super.onPlayerError(error)
-            Timber.d(TAG, "errorCode : ${error.errorCode}, errorCodeName : ${error.errorCodeName}")
-        }
-
-        override fun onCues(cueGroup: CueGroup) {
-            super.onCues(cueGroup)
-        }
-
-        override fun onRenderedFirstFrame() {
-            Timber.d(TAG, "onRenderedFirstFrame")
-            super.onRenderedFirstFrame()
-        }
-
-        override fun onVideoSizeChanged(videoSize: VideoSize) {
-            super.onVideoSizeChanged(videoSize)
-            Timber.d(TAG, "onVideoSizeChanged : $videoSize")
-        }
-    }
-
     init {
         Timber.d(TAG, "CognacPlayer init")
-        player.addListener(listener)
     }
 
     fun setMediaItem(cognacData: CognacData) {
@@ -115,6 +96,14 @@ class CognacPlayer(
     fun setPlaybackSpeed(speed: Float) = player.setPlaybackSpeed(speed)
     fun isPlaying() = player.isPlaying
 
+    fun addListener(listener: Player.Listener) {
+        player.addListener(listener)
+    }
+
+    fun removeListener(listener: Player.Listener) {
+        player.removeListener(listener)
+    }
+
     fun hasSubtitleLists(): MutableList<String>? {
         val lists: MutableList<String> = mutableListOf()
         player.currentTracks.groups.forEachIndexed { groupIndex, trackGroup ->
@@ -146,7 +135,6 @@ class CognacPlayer(
 
     fun release() {
         Timber.d(TAG, "CognacPlayer release")
-        player.removeListener(listener)
         player.release()
     }
 }

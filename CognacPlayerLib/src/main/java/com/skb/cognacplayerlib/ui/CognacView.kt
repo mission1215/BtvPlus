@@ -26,7 +26,10 @@ import com.skb.cognacplayerlib.ui.CognacViewModel.ViewEffect.PictureInPitureMode
 @Composable
 fun CognacView(
     modifier: Modifier = Modifier,
-    cognacViewModel: CognacViewModel
+    cognacViewModel: CognacViewModel,
+    onLeftIconClick: (() -> Unit)? = null,
+    onCenterIconClick: (() -> Unit)? = null,
+    onRightIconClick: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
     val player by rememberUpdatedState(cognacViewModel.getPlayer())
@@ -54,17 +57,29 @@ fun CognacView(
         PlaybackActionBus.actions.collect { action ->
             when (action) {
                 Action.Left -> {
-                    cognacViewModel.seekTo(player.currentPosition - 10000)
+                    if (onLeftIconClick != null) {
+                        onLeftIconClick()
+                    } else {
+                        cognacViewModel.seekTo(player.currentPosition - 10000)
+                    }
                 }
                 Action.Center -> {
-                    cognacViewModel.togglePlayState()
-                    pipResource?.let { resource ->
-                        resource.isPlaying = player.isPlaying
-                        updatePipParams(context, resource)
+                    if (onCenterIconClick != null) {
+                        onCenterIconClick()
+                    } else {
+                        cognacViewModel.togglePlayState()
+                        pipResource?.let { resource ->
+                            resource.isPlaying = player.isPlaying
+                            updatePipParams(context, resource)
+                        }
                     }
                 }
                 Action.Right -> {
-                    cognacViewModel.seekTo(player.currentPosition + 10000)
+                    if (onRightIconClick != null) {
+                        onRightIconClick()
+                    } else {
+                        cognacViewModel.seekTo(player.currentPosition + 10000)
+                    }
                 }
             }
         }
