@@ -25,7 +25,7 @@ import timber.log.Timber
 
 @OptIn(UnstableApi::class)
 class CognacViewModel(private val player: CognacPlayer) : ViewModel() {
-    private val TAG = "MediaViewModel"
+    private val TAG = "CognacViewModel"
 
     private val _viewEffect = MutableSharedFlow<ViewEffect>()
     val viewEffect = _viewEffect.asSharedFlow()
